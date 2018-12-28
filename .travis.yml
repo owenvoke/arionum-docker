@@ -1,0 +1,22 @@
+dist: trusty
+language: php
+
+php:
+- 7.3
+
+services:
+- docker
+
+env:
+- CLI_COMMIT_HASH=568a2d81c6d5ace90e878e40e10f1682b5cea9a2
+
+script:
+- wget https://raw.githubusercontent.com/arionum/lightWalletCLI/${CLI_COMMIT_HASH}/light-arionum-cli
+- docker build -t pxgamer/light-arionum-cli:latest .
+
+deploy:
+  provider: script
+  script: bash .travis/docker_push
+  on:
+    branch: master
+    repo: pxgamer/arionum-docker
